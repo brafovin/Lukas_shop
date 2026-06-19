@@ -29,7 +29,7 @@ export default function ShopView({
             marginBottom: 22,
           }}
         >
-          drop 01 — 05 / ss26 &nbsp;✦&nbsp; los angeles
+          drop 01 — {String(PRODUCTS.length).padStart(2, '0')} / ss26 &nbsp;✦&nbsp; los angeles
         </div>
         <h1
           style={{
@@ -57,8 +57,8 @@ export default function ShopView({
           }}
         >
           <p style={{ maxWidth: 520, margin: 0, fontSize: 16, lineHeight: 1.55, color: '#4a463f' }}>
-            Fünf garment-dyed Oversized-Drops. Dezenter Front-Print, lautes Statement auf dem Rücken.
-            Clean. Loud. Different — für deine Generation.
+            Die volle Kollektion — garment-dyed Oversized-Tees, Baggys, Tracksuits, Caps, Mützen,
+            Puffer und Beachwear. Clean. Loud. Different — für deine Generation.
           </p>
           <button
             onClick={onScrollToGrid}
