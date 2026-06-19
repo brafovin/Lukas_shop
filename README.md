@@ -1,25 +1,61 @@
-# CODING AGENTS: READ THIS FIRST
+# Los Angeles — Onlineshop
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+A clean, minimal, product-first streetwear storefront built from the Claude Design
+handoff (`project/Kraasen Shop.dc.html`). Five garment-dyed oversized drops with a full,
+interactive shop flow in German.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+Implemented as a **React + Vite + TypeScript** single-page app, recreating the design
+pixel-for-pixel from the original prototype.
 
-## What you should do — IMPORTANT
+## Features
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+- **Hero + product grid** — all 5 drops, lifestyle-image swap on hover, quick-add button.
+- **Product page** — image gallery (back / front / lifestyle), colour & size selection,
+  quantity stepper, and a details accordion.
+- **Cart drawer** — line items, quantity controls, free-shipping progress message
+  (free over €80), live subtotal / shipping / total.
+- **Checkout** — contact, delivery and payment forms with an order summary.
+- **Confirmation** — order number, item count and total.
 
-**Read `project/Kraasen Shop.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Getting started
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+```bash
+npm install
+npm run dev      # start the dev server (http://localhost:5173)
+npm run build    # type-check + production build into dist/
+npm run preview  # preview the production build
+```
 
-## About the design files
+## Structure
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+```
+index.html              # entry, loads Google Fonts (Archivo / Archivo Expanded / Space Mono / Permanent Marker)
+public/assets/          # the 15 product images (back / front / lifestyle × 5 drops)
+src/
+  main.tsx              # React entry
+  index.css             # reset, fonts, ::selection, hover/focus helpers
+  data.ts               # products, sizes, CONFIG (shipping threshold, hover swap, default size), euro()
+  App.tsx               # all state + shop flow logic; renders the active view
+  components/
+    Header.tsx          # sticky header + cart button
+    ShopView.tsx        # hero + product grid
+    Footer.tsx          # shop footer
+    ProductView.tsx     # product detail page
+    CartDrawer.tsx      # slide-in cart
+    CheckoutView.tsx    # checkout form + order summary
+    ConfirmView.tsx     # order confirmation
+```
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+## Configuration
 
-## Bundle contents
+The three knobs that were editor props in the original design live in `CONFIG` in
+`src/data.ts`:
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Fragen auf Deutsch` project files (HTML prototypes, assets, components)
+- `freeShipThreshold` — free-shipping threshold in € (default `80`)
+- `enableHoverSwap` — swap grid image to the lifestyle shot on hover (default `true`)
+- `defaultSize` — size pre-selected on the product page (default `'M'`)
+
+---
+
+The original design bundle is preserved under `project/` and the design conversation
+under `chats/`.

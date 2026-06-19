@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f3f1ec;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+}
+
+input {
+  font-family: inherit;
+}
+
+::selection {
+  background: #15120e;
+  color: #f3f1ec;
+}
+
+/* --- Pseudo-state helpers (the prototype used custom style-hover / style-focus attrs) --- */
+
+.btn-dark {
+  transition: background 0.15s;
+}
+.btn-dark:hover {
+  background: #2a2620;
+}
+
+.cart-btn {
+  transition: border-color 0.15s;
+}
+.cart-btn:hover {
+  border-color: #15120e;
+}
+
+.quick-add {
+  transition: all 0.15s;
+}
+.quick-add:hover {
+  background: #15120e;
+  color: #f3f1ec;
+}
+
+.kr-input {
+  transition: border-color 0.15s;
+}
+.kr-input:focus {
+  border-color: #15120e;
+}
