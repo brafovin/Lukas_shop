@@ -1,17 +1,13 @@
-import { PRODUCTS, CONFIG, euro } from '../data'
+import { PRODUCTS, euro } from '../data'
 import Footer from './Footer'
 
 interface ShopViewProps {
-  hoverId: string | null
-  onHover: (id: string | null) => void
   onOpenProduct: (id: string) => void
   onQuickAdd: (id: string) => void
   onScrollToGrid: () => void
 }
 
 export default function ShopView({
-  hoverId,
-  onHover,
   onOpenProduct,
   onQuickAdd,
   onScrollToGrid,
@@ -58,7 +54,7 @@ export default function ShopView({
         >
           <p style={{ maxWidth: 520, margin: 0, fontSize: 16, lineHeight: 1.55, color: '#4a463f' }}>
             Die volle Kollektion — garment-dyed Oversized-Tees, Baggys, Tracksuits, Caps, Mützen,
-            Puffer und Beachwear. Clean. Loud. Different — für deine Generation.
+            Puffer, Beachwear und Sneaker. Clean. Loud. Different — für deine Generation.
           </p>
           <button
             onClick={onScrollToGrid}
@@ -121,13 +117,10 @@ export default function ShopView({
         }}
       >
         {PRODUCTS.map((p) => {
-          const lifeOpacity = CONFIG.enableHoverSwap && hoverId === p.id ? 1 : 0
           return (
             <article
               key={p.id}
               onClick={() => onOpenProduct(p.id)}
-              onMouseEnter={() => CONFIG.enableHoverSwap && onHover(p.id)}
-              onMouseLeave={() => CONFIG.enableHoverSwap && onHover(null)}
               style={{ cursor: 'pointer' }}
             >
               <div
@@ -140,6 +133,7 @@ export default function ShopView({
               >
                 <img
                   src={p.back}
+                  alt={p.name}
                   style={{
                     position: 'absolute',
                     inset: 0,
@@ -147,18 +141,6 @@ export default function ShopView({
                     height: '100%',
                     objectFit: 'contain',
                     padding: 14,
-                  }}
-                />
-                <img
-                  src={p.life}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    opacity: lifeOpacity,
-                    transition: 'opacity .55s ease',
                   }}
                 />
                 <span

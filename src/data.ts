@@ -9,9 +9,15 @@ export interface Product {
   name: string
   price: number
   vibe: string
+  /** Optional product-detail copy; falls back to a generic tee description. */
+  desc?: string
+  /** Optional material/fit copy; falls back to a generic tee fit. */
+  fit?: string
   back: string
   front: string
   life: string
+  /** Optional custom size run (e.g. One Size, shoe sizes). Defaults to clothing sizes. */
+  sizes?: string[]
   colors: Color[]
 }
 
@@ -31,13 +37,13 @@ export interface CartLine {
 export const CONFIG = {
   /** Free shipping kicks in at this order subtotal (€). */
   freeShipThreshold: 80,
-  /** Swap the grid image to the lifestyle shot on hover. */
-  enableHoverSwap: true,
-  /** Size pre-selected on the product page. */
+  /** Size pre-selected on the product page when available. */
   defaultSize: 'M',
 }
 
 export const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+
+const A = (name: string) => `/assets/${name}.png`
 
 export const PRODUCTS: Product[] = [
   {
@@ -46,9 +52,9 @@ export const PRODUCTS: Product[] = [
     name: 'Sunset Weapon',
     price: 15,
     vibe: 'golden hour. laid back. dangerous beauty.',
-    back: '/assets/p1_back.png',
-    front: '/assets/p1_front.png',
-    life: '/assets/p1_life.png',
+    back: A('p1_back'),
+    front: A('p1_front'),
+    life: A('p1_life'),
     colors: [
       { name: 'Washed Black', hex: '#2c2926' },
       { name: 'Sunset Pink', hex: '#d98f8c' },
@@ -63,9 +69,9 @@ export const PRODUCTS: Product[] = [
     name: 'City Of Angels',
     price: 15,
     vibe: 'skyline dreams. concrete royalty.',
-    back: '/assets/p2_back.png',
-    front: '/assets/p2_front.png',
-    life: '/assets/p2_life.png',
+    back: A('p2_back'),
+    front: A('p2_front'),
+    life: A('p2_life'),
     colors: [
       { name: 'Faded Charcoal', hex: '#3b3a3a' },
       { name: 'Chrome Grey', hex: '#9b9a9c' },
@@ -80,9 +86,9 @@ export const PRODUCTS: Product[] = [
     name: 'Palm Heat',
     price: 15,
     vibe: 'west coast classic. heat in the streets.',
-    back: '/assets/p3_back.png',
-    front: '/assets/p3_front.png',
-    life: '/assets/p3_life.png',
+    back: A('p3_back'),
+    front: A('p3_front'),
+    life: A('p3_life'),
     colors: [
       { name: 'Vintage White', hex: '#efe9dd' },
       { name: 'Olive', hex: '#595b3d' },
@@ -97,9 +103,9 @@ export const PRODUCTS: Product[] = [
     name: 'West Coast Ammo',
     price: 15,
     vibe: "built different. reppin' the coast.",
-    back: '/assets/p4_back.png',
-    front: '/assets/p4_front.png',
-    life: '/assets/p4_life.png',
+    back: A('p4_back'),
+    front: A('p4_front'),
+    life: A('p4_life'),
     colors: [
       { name: 'Faded Olive', hex: '#555a3b' },
       { name: 'Khaki', hex: '#9a9067' },
@@ -114,9 +120,9 @@ export const PRODUCTS: Product[] = [
     name: 'Midnight Boulevard',
     price: 15,
     vibe: 'late nights. city lights. own the boulevard.',
-    back: '/assets/p5_back.png',
-    front: '/assets/p5_front.png',
-    life: '/assets/p5_life.png',
+    back: A('p5_back'),
+    front: A('p5_front'),
+    life: A('p5_life'),
     colors: [
       { name: 'Burgundy', hex: '#4e2b30' },
       { name: 'Violet', hex: '#6b5a72' },
@@ -126,132 +132,201 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    id: 'baggy',
+    id: 'pants',
     num: '06',
-    name: 'L.A. Baggy',
-    price: 45,
-    vibe: 'wide leg. low slung. all-day comfort.',
-    back: '/assets/baggy_back.svg',
-    front: '/assets/baggy_front.svg',
-    life: '/assets/baggy_life.svg',
+    name: 'Baggy Pants',
+    price: 15,
+    vibe: 'baggy fit. washed denim. west coast walk.',
+    desc: 'Baggy Fit, washed Denim. Großer Side-Print, dezentes Logo. Lässt sich zu allem stylen.',
+    fit: '100% Baumwoll-Denim. Extraweiter Baggy Cut – fällt großzügig aus. Verstellbarer Kordelzug am Bund.',
+    back: A('pants_back'),
+    front: A('pants_front'),
+    life: A('pants_life'),
     colors: [
-      { name: 'Washed Indigo', hex: '#4a566b' },
-      { name: 'Stone Blue', hex: '#8a98ab' },
-      { name: 'Carpenter Black', hex: '#222121' },
+      { name: 'Washed Black', hex: '#2c2926' },
+      { name: 'Vintage Grey', hex: '#6b6864' },
       { name: 'Sand', hex: '#cbb48f' },
-      { name: 'Off White', hex: '#efe9dd' },
     ],
   },
   {
     id: 'tracksuit',
     num: '07',
-    name: 'Eastside Set',
-    price: 75,
-    vibe: 'matching set. couch to street.',
-    back: '/assets/tracksuit_back.svg',
-    front: '/assets/tracksuit_front.svg',
-    life: '/assets/tracksuit_life.svg',
+    name: 'Sunset Suit',
+    price: 15,
+    vibe: 'matching set. sunset tones. von kopf bis fuß.',
+    desc: 'Komplettes Set: Jacke + Hose. Großer Skyline-Print hinten, West-Coast-Streifen seitlich.',
+    fit: 'Weicher French-Terry-Mix. Relaxed Fit. Jacke mit Stehkragen & Zip, Hose mit elastischem Bund.',
+    back: A('track_back'),
+    front: A('track_front'),
+    life: A('track_life'),
     colors: [
-      { name: 'Heather Grey', hex: '#9b9893' },
-      { name: 'Black', hex: '#161514' },
-      { name: 'Navy', hex: '#2b3142' },
-      { name: 'Faded Olive', hex: '#555a3b' },
+      { name: 'Cream', hex: '#e9e2d2' },
+      { name: 'Off Black', hex: '#20201e' },
       { name: 'Burgundy', hex: '#4e2b30' },
     ],
   },
   {
     id: 'cap',
     num: '08',
-    name: 'Six-Panel Cap',
+    name: 'Skyline Cap',
     price: 5,
-    vibe: 'curved brim. clean front.',
-    back: '/assets/cap_back.svg',
-    front: '/assets/cap_front.svg',
-    life: '/assets/cap_life.svg',
+    vibe: 'low profile. clean stitch. daily flex.',
+    desc: 'Low-Profile Dad-Cap. LA-Stitch vorne, Palme seitlich, KRAASEN hinten. Garment-dyed.',
+    fit: '100% Baumwolle. Verstellbarer Metallverschluss hinten. One Size.',
+    sizes: ['One Size'],
+    back: A('cap_front'),
+    front: A('cap_back'),
+    life: A('cap_back'),
     colors: [
+      { name: 'Olive', hex: '#555a3b' },
       { name: 'Black', hex: '#161514' },
       { name: 'Bone', hex: '#e4ddca' },
-      { name: 'Faded Olive', hex: '#555a3b' },
-      { name: 'Navy', hex: '#2b3142' },
     ],
   },
   {
     id: 'beanie',
     num: '09',
-    name: 'Fisherman Beanie',
+    name: 'Palm Beanie',
     price: 5,
-    vibe: 'cuffed knit. cold-day staple.',
-    back: '/assets/beanie_back.svg',
-    front: '/assets/beanie_front.svg',
-    life: '/assets/beanie_life.svg',
+    vibe: 'cozy knit. palm patch. cold city nights.',
+    desc: 'Gerippte Strickmütze mit Umschlag. KRAASEN-Stitch & Palme auf der Krempe.',
+    fit: 'Weicher Acryl-Strick. Dehnbar, One Size. Wärmt an kalten City-Nights.',
+    sizes: ['One Size'],
+    back: A('beanie'),
+    front: A('beanie'),
+    life: A('beanie'),
     colors: [
       { name: 'Black', hex: '#161514' },
-      { name: 'Ash Grey', hex: '#8d8a86' },
-      { name: 'Burgundy', hex: '#4e2b30' },
-      { name: 'Cream', hex: '#efe9dd' },
+      { name: 'Olive', hex: '#555a3b' },
+      { name: 'Bone', hex: '#e4ddca' },
     ],
   },
   {
-    id: 'puffer',
+    id: 'jacket',
     num: '10',
-    name: 'Downtown Puffer',
-    price: 129,
-    vibe: 'padded. warm. boxy.',
-    back: '/assets/puffer_back.svg',
-    front: '/assets/puffer_front.svg',
-    life: '/assets/puffer_life.svg',
+    name: 'Heights Puffer',
+    price: 15,
+    vibe: 'puffer warmth. heights ready. built for winter.',
+    desc: 'Gefütterte Puffer-Jacke mit Kapuze. Großer Skyline-Print hinten, LA-Stitch vorne.',
+    fit: 'Wattierte Steppjacke, wasserabweisend. Regular Fit. Zwei Seitentaschen, durchgehender Zip.',
+    back: A('jacket_back'),
+    front: A('jacket_front'),
+    life: A('jacket_life'),
     colors: [
+      { name: 'Olive', hex: '#4f5338' },
       { name: 'Black', hex: '#161514' },
-      { name: 'Faded Olive', hex: '#555a3b' },
-      { name: 'Sand', hex: '#cbb48f' },
-      { name: 'Charcoal', hex: '#3b3a3a' },
+      { name: 'Bone', hex: '#e4ddca' },
     ],
   },
   {
-    id: 'swim',
+    id: 'shorts',
     num: '11',
-    name: 'Pacific Swim',
+    name: 'Coast Shorts',
     price: 10,
-    vibe: 'quick-dry. beach to boardwalk.',
-    back: '/assets/swim_back.svg',
-    front: '/assets/swim_front.svg',
-    life: '/assets/swim_life.svg',
+    vibe: 'quick dry. sunset print. pool to street.',
+    desc: 'Swim Shorts mit Sunset-Allover-Print. Mesh-Futter, Zip-Pocket, Kordelzug.',
+    fit: 'Quick-Dry Mikrofaser, leicht. Mesh-Innenfutter. Elastischer Bund mit Kordel.',
+    back: A('shorts_back'),
+    front: A('shorts_front'),
+    life: A('shorts_back'),
     colors: [
-      { name: 'Navy', hex: '#2b3142' },
-      { name: 'Sunset Red', hex: '#a4413a' },
-      { name: 'Black', hex: '#161514' },
-      { name: 'Teal', hex: '#2f5d5b' },
+      { name: 'Burgundy', hex: '#4e2b30' },
+      { name: 'Off Black', hex: '#20201e' },
+      { name: 'Sand', hex: '#cbb48f' },
     ],
   },
   {
     id: 'slides',
     num: '12',
-    name: 'Venice Slides',
+    name: 'Pool Slides',
     price: 10,
-    vibe: 'pool slide. easy on.',
-    back: '/assets/slides_back.svg',
-    front: '/assets/slides_front.svg',
-    life: '/assets/slides_life.svg',
+    vibe: 'easy slide. all black. kraasen sole.',
+    desc: 'All-Black Pool-Slides. Gold-Print auf dem Riemen, KRAASEN-Profilsohle.',
+    fit: 'Weiches EVA, leicht & wasserfest. Konturierte Sohle. Fällt normal aus.',
+    sizes: ['40', '41', '42', '43', '44', '45'],
+    back: A('slides'),
+    front: A('slides'),
+    life: A('slides'),
     colors: [
       { name: 'Black', hex: '#161514' },
-      { name: 'Off White', hex: '#efe9dd' },
-      { name: 'Tan', hex: '#c9aa7d' },
+      { name: 'Bone', hex: '#e4ddca' },
     ],
   },
   {
-    id: 'aktee',
+    id: 'force',
     num: '13',
-    name: 'AK47 Graphic',
-    price: 15,
-    vibe: 'bold back print. street graphic energy.',
-    back: '/assets/aktee_back.svg',
-    front: '/assets/aktee_front.svg',
-    life: '/assets/aktee_life.svg',
+    name: 'LA Sunset Force',
+    price: 50,
+    vibe: 'luxury x west coast. iconic. clean. la soul.',
+    desc: 'Air Force 1 Low. Cremiges Premium-Leder, LA-Skyline & Palmen-Print, KRAASEN-Branding.',
+    fit: 'Echtleder-Obermaterial, gepolsterte Air-Sohle. Fällt normal aus – bei halben Größen eine Nummer kleiner.',
+    sizes: ['39', '40', '41', '42', '43', '44', '45', '46'],
+    back: A('snk_force_side'),
+    front: A('snk_force_top'),
+    life: A('snk_force_sole'),
+    colors: [
+      { name: 'Cream', hex: '#ece4d2' },
+      { name: 'Tan', hex: '#c9b08a' },
+      { name: 'Taupe', hex: '#b6a48e' },
+      { name: 'Grey', hex: '#b7b7b3' },
+      { name: 'Charcoal', hex: '#4a4540' },
+    ],
+  },
+  {
+    id: 'tn',
+    num: '14',
+    name: 'City Pulse TN',
+    price: 99.99,
+    vibe: 'fast x electric. dynamic. aggressive. city energy.',
+    desc: 'Tuned-Air TN Runner. Sunset-Gradient mit Skyline & Palmen, sichtbare Air-Einheit.',
+    fit: 'Mesh- & Synthetik-Obermaterial, Tuned-Air-Dämpfung. Fällt normal aus.',
+    sizes: ['39', '40', '41', '42', '43', '44', '45', '46'],
+    back: A('snk_tn_side'),
+    front: A('snk_tn_top'),
+    life: A('snk_tn_sole'),
     colors: [
       { name: 'Black', hex: '#161514' },
-      { name: 'Off White', hex: '#efe9dd' },
-      { name: 'Faded Olive', hex: '#555a3b' },
-      { name: 'Ash Grey', hex: '#8d8a86' },
+      { name: 'Plum', hex: '#5b2d44' },
+      { name: 'Orange', hex: '#d4702a' },
+      { name: 'Amber', hex: '#e8a24a' },
+    ],
+  },
+  {
+    id: 'shox',
+    num: '15',
+    name: 'Boulevard Shox',
+    price: 120,
+    vibe: 'street x sunset. bold. performance. west coast.',
+    desc: 'Shox Runner mit Sunset-Print. Sichtbare Shox-Säulen für Performance & Style.',
+    fit: 'Synthetik-Obermaterial, Shox-Dämpfung. Fällt eher schmal aus – eine Nummer größer wählen.',
+    sizes: ['39', '40', '41', '42', '43', '44', '45', '46'],
+    back: A('snk_shox_side'),
+    front: A('snk_shox_top'),
+    life: A('snk_shox_sole'),
+    colors: [
+      { name: 'Black', hex: '#161514' },
+      { name: 'Burgundy', hex: '#4e2b30' },
+      { name: 'Rust', hex: '#a0563a' },
+      { name: 'Sand', hex: '#d8c3a3' },
+    ],
+  },
+  {
+    id: 'airmax',
+    num: '16',
+    name: 'West Coast Air Max',
+    price: 120,
+    vibe: 'clean x iconic. timeless. versatile. la staple.',
+    desc: 'Air Max 90 Silhouette. Multi-Material-Mix, LA-Print, sichtbare Max-Air-Einheit.',
+    fit: 'Leder- & Mesh-Mix, Max-Air-Dämpfung. Fällt normal aus.',
+    sizes: ['39', '40', '41', '42', '43', '44', '45', '46'],
+    back: A('snk_airmax_side'),
+    front: A('snk_airmax_top'),
+    life: A('snk_airmax_sole'),
+    colors: [
+      { name: 'Black', hex: '#161514' },
+      { name: 'Grey', hex: '#6f6f6f' },
+      { name: 'Light Grey', hex: '#c2c0bb' },
+      { name: 'Tan', hex: '#c9b08a' },
     ],
   },
 ]
@@ -259,5 +334,11 @@ export const PRODUCTS: Product[] = [
 export const euro = (n: number): string =>
   (Math.round(n * 100) / 100).toFixed(2).replace('.', ',') + ' €'
 
-export const byId = (id: string): Product =>
-  PRODUCTS.find((p) => p.id === id)!
+export const byId = (id: string): Product => PRODUCTS.find((p) => p.id === id)!
+
+export const sizesFor = (p: Product): string[] => p.sizes ?? SIZES
+
+export const defSizeFor = (p: Product): string => {
+  const ss = sizesFor(p)
+  return ss.includes(CONFIG.defaultSize) ? CONFIG.defaultSize : ss[Math.floor(ss.length / 2)]
+}

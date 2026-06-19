@@ -1,4 +1,4 @@
-import { SIZES, CONFIG, euro, type Gallery, type Product } from '../data'
+import { sizesFor, CONFIG, euro, type Gallery, type Product } from '../data'
 
 interface ProductViewProps {
   product: Product
@@ -77,13 +77,16 @@ export default function ProductView({
       key: 'details',
       label: 'Produktdetails',
       body:
-        'Oversized Fit, garment-dyed in LA. Großer Print auf dem Rücken, dezentes Logo auf der Brust. Vibe: ' +
+        (p.desc ||
+          'Oversized Fit, garment-dyed in LA. Großer Print auf dem Rücken, dezentes Logo auf der Brust.') +
+        ' Vibe: ' +
         p.vibe,
     },
     {
       key: 'fit',
       label: 'Material & Passform',
       body:
+        p.fit ||
         '100% Baumwolle, 240 g/m². Boxy Oversized Cut – fällt großzügig aus. Für eine schmalere Passform eine Nummer kleiner wählen.',
     },
     {
@@ -230,7 +233,7 @@ export default function ProductView({
             </span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
-            {SIZES.map((sz) => (
+            {sizesFor(p).map((sz) => (
               <button key={sz} onClick={() => onSelectSize(sz)} style={sizeStyle(selSize === sz)}>
                 {sz}
               </button>

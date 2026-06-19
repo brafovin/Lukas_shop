@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
-import { CONFIG, byId, euro, type CartLine, type Gallery, type View } from './data'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { CONFIG, byId, defSizeFor, euro, type CartLine, type Gallery, type View } from './data'
 import Header from './components/Header'
+import IntroSplash from './components/IntroSplash'
 import ShopView from './components/ShopView'
 import ProductView from './components/ProductView'
 import CheckoutView from './components/CheckoutView'
@@ -39,10 +40,17 @@ export default function App() {
   const [selSize, setSelSize] = useState(CONFIG.defaultSize)
   const [selQty, setSelQty] = useState(1)
   const [gallery, setGallery] = useState<Gallery>('back')
-  const [hoverId, setHoverId] = useState<string | null>(null)
   const [openAcc, setOpenAcc] = useState<string | null>('details')
   const [orderNo, setOrderNo] = useState<string | null>(null)
   const [lastOrder, setLastOrder] = useState<{ total: number; count: number } | null>(null)
+  const [intro, setIntro] = useState(true)
+
+  // auto-dismiss the intro splash after 5s (it also fades out via CSS at ~84%)
+  useEffect(() => {
+    const t = setTimeout(() => setIntro(false), 5000)
+    return () => clearTimeout(t)
+  }, [])
+  const skipIntro = useCallback(() => setIntro(false), [])
 
   // --- navigation ---
   const goShop = useCallback(() => {
@@ -55,7 +63,7 @@ export default function App() {
     setView('product')
     setActiveId(id)
     setSelColor(0)
-    setSelSize(CONFIG.defaultSize)
+    setSelSize(defSizeFor(byId(id)))
     setSelQty(1)
     setGallery('back')
     setOpenAcc('details')
@@ -95,7 +103,7 @@ export default function App() {
 
   const quickAdd = useCallback(
     (id: string) => {
-      addItem(id, 0, CONFIG.defaultSize, 1)
+      addItem(id, 0, defSizeFor(byId(id)), 1)
       setCartOpen(true)
     },
     [addItem],
@@ -198,6 +206,8 @@ export default function App() {
         overflowX: 'hidden',
       }}
     >
+      {intro && <IntroSplash onSkip={skipIntro} />}
+
       <div
         style={{
           background: '#0d0b09',
@@ -223,8 +233,6 @@ export default function App() {
 
       {view === 'shop' && (
         <ShopView
-          hoverId={hoverId}
-          onHover={setHoverId}
           onOpenProduct={openProduct}
           onQuickAdd={quickAdd}
           onScrollToGrid={scrollToGrid}
