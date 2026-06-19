@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800;900&family=Space+Mono:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:#f3f1ec;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;}
+button{font-family:inherit;}
+input{font-family:inherit;}
+::selection{background:#15120e;color:#f3f1ec;}
+</style>
+</helmet>
+<div style="font-family:'Archivo',system-ui,sans-serif;color:#15120e;background:#f3f1ec;min-height:100vh;overflow-x:hidden;">
+
+  <div style="background:#0d0b09;color:#cfcabf;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;text-align:center;padding:9px 16px;text-transform:lowercase;">clean. loud. different. &nbsp;·&nbsp; für deine generation. &nbsp;·&nbsp; kostenloser versand ab 80 € &nbsp;·&nbsp; garment-dyed in LA</div>
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(243,241,236,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(20,18,14,.14);">
+    <div style="max-width:1320px;margin:0 auto;padding:15px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px;">
+      <div onClick="{{ goShop }}" style="cursor:pointer;display:flex;align-items:center;">
+        <span style="font-family:'Permanent Marker',cursive;font-size:27px;line-height:1;letter-spacing:.5px;">Los Angeles</span>
+      </div>
+      <nav style="display:flex;flex-wrap:wrap;gap:28px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;">
+        <span onClick="{{ goShop }}" style="cursor:pointer;">Shop</span>
+        <span onClick="{{ scrollToGrid }}" style="cursor:pointer;">Drops</span>
+        <span onClick="{{ scrollToGrid }}" style="cursor:pointer;">Lookbook</span>
+      </nav>
+      <button onClick="{{ openCart }}" style-hover="border-color:#15120e;" style="position:relative;display:flex;align-items:center;gap:9px;border:1px solid rgba(20,18,14,.2);background:transparent;color:#15120e;padding:9px 16px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .15s;">
+        Warenkorb
+        <sc-if value="{{ hasCartCount }}" hint-placeholder-val="{{ false }}">
+          <span style="background:#15120e;color:#f3f1ec;min-width:18px;height:18px;border-radius:9px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 5px;">{{ cartCountLabel }}</span>
+        </sc-if>
+      </button>
+    </div>
+  </header>
+
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ true }}">
+  <main data-screen-label="Shop">
+    <section style="max-width:1320px;margin:0 auto;padding:62px 28px 38px;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8c867b;margin-bottom:22px;">drop 01 — 05 / ss26 &nbsp;✦&nbsp; los angeles</div>
+      <h1 style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;margin:0;font-size:clamp(40px,8.5vw,108px);">frische<br>neue sachen.</h1>
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:22px;margin-top:30px;">
+        <p style="max-width:520px;margin:0;font-size:16px;line-height:1.55;color:#4a463f;">Fünf garment-dyed Oversized-Drops. Dezenter Front-Print, lautes Statement auf dem Rücken. Clean. Loud. Different — für deine Generation.</p>
+        <button onClick="{{ scrollToGrid }}" style-hover="background:#2a2620;" style="background:#0d0b09;color:#f3f1ec;border:none;padding:16px 28px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .15s;white-space:nowrap;">Drops ansehen ↓</button>
+      </div>
+    </section>
+
+    <div id="kr-grid" style="max-width:1320px;margin:0 auto;padding:24px 28px 8px;display:flex;align-items:flex-end;justify-content:space-between;border-top:1px solid rgba(20,18,14,.14);">
+      <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(22px,3vw,34px);letter-spacing:-.01em;margin:0;">Alle Drops</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:14px;color:#8c867b;">{{ gridCountLabel }}</span>
+    </div>
+
+    <section style="max-width:1320px;margin:0 auto;padding:24px 28px 74px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:38px 26px;">
+      <sc-for list="{{ grid }}" as="item" hint-placeholder-count="5">
+        <article onClick="{{ item.onOpen }}" onMouseEnter="{{ item.onHover }}" onMouseLeave="{{ item.onLeave }}" style="cursor:pointer;">
+          <div style="position:relative;aspect-ratio:4/5;background:#eae7e0;overflow:hidden;">
+            <img src="{{ item.back }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14px;" />
+            <img src="{{ item.life }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ item.lifeOpacity }};transition:opacity .55s ease;" />
+            <span style="position:absolute;top:11px;left:11px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:#15120e;background:rgba(243,241,236,.85);padding:3px 7px;">{{ item.num }}</span>
+            <button onClick="{{ item.onQuickAdd }}" style-hover="background:#15120e;color:#f3f1ec;" style="position:absolute;bottom:12px;right:12px;width:42px;height:42px;border-radius:50%;border:none;background:rgba(243,241,236,.92);color:#15120e;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;">+</button>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-top:14px;">
+            <div>
+              <h3 style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:700;text-transform:uppercase;font-size:16px;letter-spacing:-.005em;margin:0;">{{ item.name }}</h3>
+              <div style="display:flex;gap:6px;margin-top:10px;">
+                <sc-for list="{{ item.swatches }}" as="sw" hint-placeholder-count="5">
+                  <span style="width:13px;height:13px;border-radius:50%;background:{{ sw.hex }};box-shadow:0 0 0 1px rgba(20,18,14,.2);"></span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="font-weight:600;font-size:15px;white-space:nowrap;">{{ item.priceFmt }}</div>
+          </div>
+        </article>
+      </sc-for>
+    </section>
+
+    <footer style="background:#0d0b09;color:#cfcabf;">
+      <div style="max-width:1320px;margin:0 auto;padding:56px 28px;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:280px;">
+          <span style="font-family:'Permanent Marker',cursive;font-size:34px;color:#f3f1ec;">Los Angeles</span>
+          <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;line-height:1.7;">designed for the now.<br>made for the future.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:13px;">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f6a61;margin-bottom:3px;">Shop</span>
+          <span style="cursor:pointer;">Alle Drops</span><span style="cursor:pointer;">Lookbook</span><span style="cursor:pointer;">Größentabelle</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:13px;">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f6a61;margin-bottom:3px;">Service</span>
+          <span style="cursor:pointer;">Versand & Rückgabe</span><span style="cursor:pointer;">Kontakt</span><span style="cursor:pointer;">FAQ</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
+          <div style="width:168px;height:44px;background:repeating-linear-gradient(90deg,#cfcabf 0,#cfcabf 2px,transparent 2px,transparent 5px);"></div>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6f6a61;">est. now &nbsp;✦&nbsp; gen.z energy</span>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.1);padding:18px 28px;text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:#6f6a61;text-transform:lowercase;">© 2026 los angeles — no rules. just you.</div>
+    </footer>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+  <main data-screen-label="Produkt" style="max-width:1320px;margin:0 auto;padding:22px 28px 84px;">
+    <button onClick="{{ active.onBack }}" style="background:none;border:none;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.04em;color:#8c867b;padding:8px 0;margin-bottom:10px;text-transform:lowercase;">← zurück zu allen drops</button>
+    <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start;">
+      <div style="flex:1 1 440px;min-width:300px;">
+        <div style="aspect-ratio:4/5;background:#eae7e0;overflow:hidden;">
+          <img src="{{ active.mainImg }}" style="width:100%;height:100%;object-fit:contain;padding:24px;" />
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <sc-for list="{{ active.thumbs }}" as="t" hint-placeholder-count="3">
+            <img src="{{ t.src }}" onClick="{{ t.onClick }}" style="{{ t.style }}" />
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:1 1 380px;min-width:300px;">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8c867b;">drop {{ active.num }}</div>
+        <h1 style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(32px,5vw,52px);line-height:.96;letter-spacing:-.02em;margin:10px 0 8px;">{{ active.name }}</h1>
+        <div style="font-family:'Space Mono',monospace;font-size:13px;color:#4a463f;text-transform:lowercase;">vibe: {{ active.vibe }}</div>
+        <div style="font-size:24px;font-weight:600;margin:22px 0 26px;">{{ active.priceFmt }}</div>
+
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Farbe</span>
+          <span style="font-family:'Space Mono',monospace;font-size:12px;color:#8c867b;">{{ active.colorNameSel }}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:28px;">
+          <sc-for list="{{ active.colors }}" as="c" hint-placeholder-count="5">
+            <span onClick="{{ c.onClick }}" title="{{ c.name }}" style="{{ c.style }}"></span>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Größe</span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:#8c867b;text-transform:lowercase;cursor:pointer;">größentabelle</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;">
+          <sc-for list="{{ active.sizes }}" as="z" hint-placeholder-count="6">
+            <button onClick="{{ z.onClick }}" style="{{ z.style }}">{{ z.label }}</button>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-bottom:18px;">
+          <div style="display:flex;align-items:center;border:1px solid rgba(20,18,14,.2);">
+            <button onClick="{{ active.onDecQty }}" style="width:46px;height:54px;background:none;border:none;font-size:18px;cursor:pointer;color:#15120e;">−</button>
+            <span style="width:34px;text-align:center;font-weight:600;font-size:15px;">{{ active.qty }}</span>
+            <button onClick="{{ active.onIncQty }}" style="width:46px;height:54px;background:none;border:none;font-size:18px;cursor:pointer;color:#15120e;">+</button>
+          </div>
+          <button onClick="{{ active.onAdd }}" style-hover="background:#2a2620;" style="flex:1;background:#0d0b09;color:#f3f1ec;border:none;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .15s;">In den Warenkorb</button>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8c867b;text-transform:lowercase;margin-bottom:30px;">✦ klein vorne. groß hinten. — der print sitzt groß auf dem rücken.</div>
+
+        <div style="border-top:1px solid rgba(20,18,14,.14);">
+          <sc-for list="{{ active.acc }}" as="a" hint-placeholder-count="3">
+            <div style="border-bottom:1px solid rgba(20,18,14,.14);">
+              <div onClick="{{ a.onToggle }}" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">
+                <span>{{ a.label }}</span>
+                <span style="font-size:18px;font-weight:400;color:#8c867b;">{{ a.icon }}</span>
+              </div>
+              <sc-if value="{{ a.open }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:0;padding:0 0 18px;font-size:14px;line-height:1.6;color:#4a463f;max-width:48ch;">{{ a.body }}</p>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+  <main data-screen-label="Checkout" style="max-width:1320px;margin:0 auto;padding:38px 28px 84px;">
+    <h1 style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(28px,4vw,44px);letter-spacing:-.01em;margin:0 0 32px;">Kasse</h1>
+    <form onSubmit="{{ placeOrder }}" style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start;">
+      <div style="flex:1 1 440px;min-width:300px;display:flex;flex-direction:column;gap:30px;">
+        <fieldset style="border:none;padding:0;margin:0;">
+          <legend style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:0;margin-bottom:14px;">Kontakt</legend>
+          <input type="email" required placeholder="E-Mail-Adresse" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+        </fieldset>
+        <fieldset style="border:none;padding:0;margin:0;">
+          <legend style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:0;margin-bottom:14px;">Lieferadresse</legend>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <input required placeholder="Vorname" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+            <input required placeholder="Nachname" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+          </div>
+          <input required placeholder="Straße & Hausnummer" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;margin-bottom:12px;" />
+          <div style="display:grid;grid-template-columns:120px 1fr;gap:12px;margin-bottom:12px;">
+            <input required placeholder="PLZ" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+            <input required placeholder="Stadt" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+          </div>
+          <input placeholder="Land" defaultValue="Deutschland" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+        </fieldset>
+        <fieldset style="border:none;padding:0;margin:0;">
+          <legend style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:0;margin-bottom:14px;">Zahlung</legend>
+          <input required placeholder="Kartennummer" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;margin-bottom:12px;" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <input required placeholder="MM / JJ" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+            <input required placeholder="CVC" style-focus="border-color:#15120e;" style="width:100%;padding:14px;border:1px solid rgba(20,18,14,.22);background:#fff;font-size:14px;color:#15120e;outline:none;transition:border-color .15s;" />
+          </div>
+        </fieldset>
+      </div>
+
+      <aside style="flex:1 1 340px;min-width:300px;background:#fff;border:1px solid rgba(20,18,14,.12);padding:24px;align-self:flex-start;">
+        <h2 style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:0 0 18px;">Bestellübersicht</h2>
+        <div style="display:flex;flex-direction:column;gap:14px;max-height:320px;overflow-y:auto;">
+          <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
+            <div style="display:flex;gap:12px;align-items:center;">
+              <img src="{{ l.img }}" style="width:48px;height:60px;object-fit:cover;background:#eae7e0;flex:none;" />
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:600;font-size:13px;">{{ l.name }}</div>
+                <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8c867b;text-transform:lowercase;">{{ l.colorName }} · {{ l.size }} · {{ l.qty }}×</div>
+              </div>
+              <span style="font-weight:600;font-size:13px;">{{ l.lineFmt }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="border-top:1px solid rgba(20,18,14,.12);margin-top:18px;padding-top:16px;display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#8c867b;">Zwischensumme</span><span style="font-weight:600;">{{ subtotalFmt }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#8c867b;">Versand</span><span style="font-weight:600;">{{ shippingFmt }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;border-top:1px solid rgba(20,18,14,.12);padding-top:10px;"><span>Gesamt</span><span>{{ totalFmt }}</span></div>
+        </div>
+        <button type="submit" style-hover="background:#2a2620;" style="width:100%;margin-top:18px;background:#0d0b09;color:#f3f1ec;border:none;padding:16px;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .15s;">Bestellung abschließen</button>
+        <button type="button" onClick="{{ goShop }}" style="width:100%;margin-top:10px;background:none;border:none;color:#8c867b;font-family:'Space Mono',monospace;font-size:12px;text-transform:lowercase;cursor:pointer;">← weiter shoppen</button>
+      </aside>
+    </form>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
+  <main data-screen-label="Bestätigung" style="max-width:680px;margin:0 auto;padding:78px 28px;text-align:center;">
+    <div style="width:64px;height:64px;border-radius:50%;background:#0d0b09;color:#f3f1ec;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 28px;">✓</div>
+    <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8c867b;">bestellung {{ conf.orderNo }}</div>
+    <h1 style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(40px,8vw,80px);letter-spacing:-.02em;margin:14px 0 18px;">Danke.</h1>
+    <p style="font-size:16px;line-height:1.6;color:#4a463f;margin:0 auto 32px;max-width:42ch;">Deine Bestellung ist eingegangen. Wir schicken dir eine Bestätigung per E-Mail — deine Drops sind in 2–4 Werktagen da.</p>
+    <div style="display:inline-flex;gap:40px;justify-content:center;border-top:1px solid rgba(20,18,14,.14);border-bottom:1px solid rgba(20,18,14,.14);padding:18px 0;margin-bottom:36px;">
+      <div><div style="font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8c867b;">Artikel</div><div style="font-weight:600;margin-top:4px;font-size:15px;">{{ conf.count }}</div></div>
+      <div><div style="font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8c867b;">Gesamt</div><div style="font-weight:600;margin-top:4px;font-size:15px;">{{ conf.totalFmt }}</div></div>
+    </div>
+    <div>
+      <button onClick="{{ continueShopping }}" style-hover="background:#2a2620;" style="background:#0d0b09;color:#f3f1ec;border:none;padding:16px 32px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .15s;">Weiter shoppen</button>
+    </div>
+  </main>
+  </sc-if>
+
+  <div onClick="{{ closeCart }}" style="position:fixed;inset:0;background:rgba(13,11,9,.45);z-index:50;opacity:{{ scrimOpacity }};pointer-events:{{ scrimPointer }};transition:opacity .3s;"></div>
+  <aside style="position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:#f3f1ec;z-index:60;display:flex;flex-direction:column;transform:translateX({{ cartTranslate }});transition:transform .35s cubic-bezier(.4,0,.1,1);box-shadow:-12px 0 40px rgba(0,0,0,.12);">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid rgba(20,18,14,.14);">
+      <span style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:18px;">Warenkorb ({{ cartCountLabel }})</span>
+      <button onClick="{{ closeCart }}" style="background:none;border:none;font-size:22px;cursor:pointer;color:#15120e;line-height:1;">✕</button>
+    </div>
+    <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px;text-align:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:13px;color:#8c867b;text-transform:lowercase;">dein warenkorb ist leer.</div>
+        <button onClick="{{ closeCart }}" style="background:none;border:1px solid rgba(20,18,14,.22);padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;">Weiter shoppen</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;overflow-y:auto;padding:6px 24px;">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
+          <div style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(20,18,14,.1);">
+            <img src="{{ l.img }}" style="width:64px;height:80px;object-fit:cover;background:#eae7e0;flex:none;" />
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;gap:8px;">
+                <span style="font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:700;text-transform:uppercase;font-size:14px;">{{ l.name }}</span>
+                <button onClick="{{ l.onRemove }}" style="background:none;border:none;cursor:pointer;color:#8c867b;font-size:14px;line-height:1;">✕</button>
+              </div>
+              <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8c867b;text-transform:lowercase;margin-top:4px;">{{ l.colorName }} · {{ l.size }}</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+                <div style="display:flex;align-items:center;border:1px solid rgba(20,18,14,.2);">
+                  <button onClick="{{ l.onDec }}" style="width:30px;height:30px;background:none;border:none;cursor:pointer;font-size:15px;color:#15120e;">−</button>
+                  <span style="width:26px;text-align:center;font-size:13px;font-weight:600;">{{ l.qty }}</span>
+                  <button onClick="{{ l.onInc }}" style="width:30px;height:30px;background:none;border:none;cursor:pointer;font-size:15px;color:#15120e;">+</button>
+                </div>
+                <span style="font-weight:600;font-size:14px;">{{ l.lineFmt }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border-top:1px solid rgba(20,18,14,.14);padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;text-transform:lowercase;color:#4a463f;text-align:center;background:rgba(20,18,14,.05);padding:9px;">{{ shipMsg }}</div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;"><span style="color:#8c867b;">Zwischensumme</span><span style="font-weight:600;">{{ subtotalFmt }}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;"><span style="color:#8c867b;">Versand</span><span style="font-weight:600;">{{ shippingFmt }}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;border-top:1px solid rgba(20,18,14,.14);padding-top:10px;margin-top:4px;"><span>Gesamt</span><span>{{ totalFmt }}</span></div>
+        <button onClick="{{ goCheckout }}" style-hover="background:#2a2620;" style="margin-top:8px;background:#0d0b09;color:#f3f1ec;border:none;padding:16px;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .15s;">Zur Kasse</button>
+      </div>
+    </sc-if>
+  </aside>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 900 },
+  &quot;freeShipThreshold&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 80, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 0, &quot;max&quot;: 200, &quot;step&quot;: 5 },
+  &quot;enableHoverSwap&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; },
+  &quot;defaultSize&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;M&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;XS&quot;, &quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;, &quot;XXL&quot;] }
+}">
+class Component extends DCLogic {
+  state = {
+    view: 'shop', activeId: null, cartOpen: false, cart: [],
+    selColor: 0, selSize: 'M', selQty: 1, gallery: 'back',
+    hoverId: null, openAcc: 'details', orderNo: null, lastOrder: null,
+  };
+
+  SIZES = ['XS','S','M','L','XL','XXL'];
+
+  PRODUCTS = [
+    { id:'sunset', num:'01', name:'Sunset Weapon', price:15, vibe:'golden hour. laid back. dangerous beauty.',
+      back:'assets/p1_back.png', front:'assets/p1_front.png', life:'assets/p1_life.png',
+      colors:[{name:'Washed Black',hex:'#2c2926'},{name:'Sunset Pink',hex:'#d98f8c'},{name:'Apricot',hex:'#e0a777'},{name:'Sand',hex:'#cbb48f'},{name:'Off White',hex:'#efe9dd'}] },
+    { id:'angels', num:'02', name:'City Of Angels', price:15, vibe:'skyline dreams. concrete royalty.',
+      back:'assets/p2_back.png', front:'assets/p2_front.png', life:'assets/p2_life.png',
+      colors:[{name:'Faded Charcoal',hex:'#3b3a3a'},{name:'Chrome Grey',hex:'#9b9a9c'},{name:'Smoke',hex:'#c6c3bd'},{name:'Off White',hex:'#efe9dd'},{name:'Black',hex:'#161514'}] },
+    { id:'palm', num:'03', name:'Palm Heat', price:15, vibe:'west coast classic. heat in the streets.',
+      back:'assets/p3_back.png', front:'assets/p3_front.png', life:'assets/p3_life.png',
+      colors:[{name:'Vintage White',hex:'#efe9dd'},{name:'Olive',hex:'#595b3d'},{name:'Sage',hex:'#8f9777'},{name:'Tan',hex:'#c9aa7d'},{name:'Off Black',hex:'#1f1f1c'}] },
+    { id:'ammo', num:'04', name:'West Coast Ammo', price:15, vibe:"built different. reppin' the coast.",
+      back:'assets/p4_back.png', front:'assets/p4_front.png', life:'assets/p4_life.png',
+      colors:[{name:'Faded Olive',hex:'#555a3b'},{name:'Khaki',hex:'#9a9067'},{name:'Bone',hex:'#e4ddca'},{name:'Black',hex:'#161514'},{name:'Off White',hex:'#efe9dd'}] },
+    { id:'midnight', num:'05', name:'Midnight Boulevard', price:15, vibe:'late nights. city lights. own the boulevard.',
+      back:'assets/p5_back.png', front:'assets/p5_front.png', life:'assets/p5_life.png',
+      colors:[{name:'Burgundy',hex:'#4e2b30'},{name:'Violet',hex:'#6b5a72'},{name:'Ash Grey',hex:'#8d8a86'},{name:'Chrome',hex:'#b7b4b0'},{name:'Off White',hex:'#efe9dd'}] },
+  ];
+
+  euro(n){ return (Math.round(n*100)/100).toFixed(2).replace('.', ',') + ' €'; }
+  byId(id){ return this.PRODUCTS.find(p => p.id === id); }
+  threshold(){ const t = this.props.freeShipThreshold; return (t == null ? 80 : t); }
+  defSize(){ return this.props.defaultSize || 'M'; }
+  hoverOn(){ const h = this.props.enableHoverSwap; return h == null ? true : h; }
+  top(){ try { window.scrollTo({ top: 0, left: 0 }); } catch(e) {} }
+
+  openProduct(id){ this.setState({ view:'product', activeId:id, selColor:0, selSize:this.defSize(), selQty:1, gallery:'back', openAcc:'details', cartOpen:false }); this.top(); }
+  goShop(){ this.setState({ view:'shop', cartOpen:false }); this.top(); }
+  openCart(){ this.setState({ cartOpen:true }); }
+  closeCart(){ this.setState({ cartOpen:false }); }
+  toggleAcc(k){ this.setState(s => ({ openAcc: s.openAcc === k ? null : k })); }
+
+  addItem(id, colorIdx, size, qty){
+    this.setState(s => {
+      const key = id + '|' + colorIdx + '|' + size;
+      const cart = s.cart.map(l => ({ ...l }));
+      const ex = cart.find(l => l.key === key);
+      if (ex) ex.qty += qty; else cart.push({ key, id, colorIdx, size, qty });
+      return { cart };
+    });
+  }
+  quickAdd(id){ this.addItem(id, 0, this.defSize(), 1); this.setState({ cartOpen:true }); }
+  addCurrent(){ const s = this.state; this.addItem(s.activeId, s.selColor, s.selSize, s.selQty); this.setState({ cartOpen:true }); }
+  changeQty(key, d){ this.setState(s => ({ cart: s.cart.map(l => l.key === key ? { ...l, qty: l.qty + d } : l).filter(l => l.qty > 0) })); }
+  removeLine(key){ this.setState(s => ({ cart: s.cart.filter(l => l.key !== key) })); }
+  goCheckout(){ if (this.state.cart.length === 0) return; this.setState({ view:'checkout', cartOpen:false }); this.top(); }
+  placeOrder(){
+    const s = this.state; if (s.cart.length === 0) return;
+    const subtotal = s.cart.reduce((a,l) => a + this.byId(l.id).price * l.qty, 0);
+    const thr = this.threshold(); const shipping = subtotal >= thr ? 0 : 4.9;
+    const count = s.cart.reduce((a,l) => a + l.qty, 0);
+    const no = 'KR-' + Math.floor(100000 + Math.random() * 900000);
+    this.setState({ view:'confirm', orderNo:no, lastOrder:{ total: subtotal + shipping, count }, cart:[] });
+    this.top();
+  }
+  continueShopping(){ this.setState({ view:'shop', orderNo:null, lastOrder:null }); this.top(); }
+  scrollToGrid(){ const el = document.getElementById('kr-grid'); if (el) { const y = el.getBoundingClientRect().top + window.pageYOffset - 64; window.scrollTo({ top:y, behavior:'smooth' }); } }
+
+  renderVals(){
+    const s = this.state, P = this.PRODUCTS, self = this;
+    const hov = this.hoverOn();
+    const thr = this.threshold();
+
+    const grid = P.map(p => ({
+      num: p.num, name: p.name, priceFmt: this.euro(p.price), back: p.back, life: p.life,
+      lifeOpacity: (hov && s.hoverId === p.id) ? 1 : 0,
+      swatches: p.colors.map(c => ({ hex: c.hex })),
+      onOpen: () => self.openProduct(p.id),
+      onHover: () => { if (hov) self.setState({ hoverId: p.id }); },
+      onLeave: () => { if (hov) self.setState({ hoverId: null }); },
+      onQuickAdd: (e) => { if (e && e.stopPropagation) e.stopPropagation(); self.quickAdd(p.id); },
+    }));
+
+    const lines = s.cart.map(l => {
+      const p = this.byId(l.id); const c = p.colors[l.colorIdx];
+      return {
+        name: p.name, img: p.back, colorName: c.name, colorHex: c.hex, size: l.size, qty: l.qty,
+        lineFmt: this.euro(p.price * l.qty),
+        onInc: () => self.changeQty(l.key, 1), onDec: () => self.changeQty(l.key, -1), onRemove: () => self.removeLine(l.key),
+      };
+    });
+    const cartCount = s.cart.reduce((a,l) => a + l.qty, 0);
+    const subtotal = s.cart.reduce((a,l) => a + this.byId(l.id).price * l.qty, 0);
+    const shippingFree = subtotal >= thr;
+    const shipping = shippingFree ? 0 : 4.9;
+    const total = subtotal + shipping;
+    let shipMsg;
+    if (subtotal <= 0) shipMsg = 'dein warenkorb ist leer.';
+    else if (shippingFree) shipMsg = 'kostenloser versand inklusive ✦';
+    else shipMsg = 'noch ' + this.euro(thr - subtotal) + ' bis zum kostenlosen versand';
+
+    const swatchStyle = (hex, act) => 'width:30px;height:30px;border-radius:50%;cursor:pointer;background:' + hex + ';transition:box-shadow .15s;box-shadow:0 0 0 1px rgba(20,18,14,.2)' + (act ? ', 0 0 0 4px #f3f1ec, 0 0 0 5.5px #15120e' : '') + ';';
+    const sizeStyle = (act) => "min-width:54px;height:46px;padding:0 12px;font-family:'Archivo',sans-serif;font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .15s;border:1px solid " + (act ? '#15120e' : 'rgba(20,18,14,.20)') + ';background:' + (act ? '#15120e' : 'transparent') + ';color:' + (act ? '#f3f1ec' : '#15120e') + ';';
+    const thumbStyle = (act) => 'width:72px;height:90px;object-fit:cover;cursor:pointer;background:#eae7e0;transition:border-color .15s;border:1px solid ' + (act ? '#15120e' : 'rgba(20,18,14,.14)') + ';';
+
+    let active = { name:'', num:'', priceFmt:'', vibe:'', mainImg:'', colorNameSel:'', qty:1, thumbs:[], colors:[], sizes:[], acc:[], onAdd:()=>{}, onBack:()=>self.goShop(), onDecQty:()=>{}, onIncQty:()=>{} };
+    if (s.view === 'product' && s.activeId) {
+      const p = this.byId(s.activeId);
+      const imgMap = { back:p.back, front:p.front, life:p.life };
+      active = {
+        name: p.name, num: p.num, priceFmt: this.euro(p.price), vibe: p.vibe,
+        mainImg: imgMap[s.gallery], colorNameSel: p.colors[s.selColor].name, qty: s.selQty,
+        thumbs: ['back','front','life'].map(k => ({ src: imgMap[k], onClick: () => self.setState({ gallery: k }), style: thumbStyle(s.gallery === k) })),
+        colors: p.colors.map((c,i) => ({ name: c.name, hex: c.hex, onClick: () => self.setState({ selColor: i }), style: swatchStyle(c.hex, s.selColor === i) })),
+        sizes: this.SIZES.map(sz => ({ label: sz, onClick: () => self.setState({ selSize: sz }), style: sizeStyle(s.selSize === sz) })),
+        acc: [
+          { key:'details', label:'Produktdetails', icon: s.openAcc==='details'?'−':'+', body:'Oversized Fit, garment-dyed in LA. Großer Print auf dem Rücken, dezentes Logo auf der Brust. Vibe: ' + p.vibe, open: s.openAcc==='details', onToggle: () => self.toggleAcc('details') },
+          { key:'fit', label:'Material & Passform', icon: s.openAcc==='fit'?'−':'+', body:'100% Baumwolle, 240 g/m². Boxy Oversized Cut – fällt großzügig aus. Für eine schmalere Passform eine Nummer kleiner wählen.', open: s.openAcc==='fit', onToggle: () => self.toggleAcc('fit') },
+          { key:'versand', label:'Versand & Rückgabe', icon: s.openAcc==='versand'?'−':'+', body:'Kostenloser Versand ab ' + thr + ' €. Lieferung in 2–4 Werktagen. 30 Tage kostenlose Rückgabe.', open: s.openAcc==='versand', onToggle: () => self.toggleAcc('versand') },
+        ],
+        onAdd: () => self.addCurrent(), onBack: () => self.goShop(),
+        onDecQty: () => self.setState(st => ({ selQty: Math.max(1, st.selQty - 1) })),
+        onIncQty: () => self.setState(st => ({ selQty: st.selQty + 1 })),
+      };
+    }
+
+    const conf = s.lastOrder ? { orderNo: s.orderNo || '', totalFmt: this.euro(s.lastOrder.total), count: s.lastOrder.count } : { orderNo:'', totalFmt:'', count:0 };
+
+    return {
+      isShop: s.view==='shop', isProduct: s.view==='product', isCheckout: s.view==='checkout', isConfirm: s.view==='confirm',
+      grid, gridCountLabel: '(' + String(P.length).padStart(2,'0') + ')',
+      lines, cartEmpty: s.cart.length===0, cartHasItems: s.cart.length>0,
+      cartCount, cartCountLabel: String(cartCount), hasCartCount: cartCount>0,
+      subtotalFmt: this.euro(subtotal), shippingFmt: shippingFree ? 'Kostenlos' : this.euro(shipping), totalFmt: this.euro(total), shipMsg,
+      cartTranslate: s.cartOpen ? '0%' : '105%', scrimOpacity: s.cartOpen ? 1 : 0, scrimPointer: s.cartOpen ? 'auto' : 'none',
+      active, conf,
+      goShop: () => self.goShop(), openCart: () => self.openCart(), closeCart: () => self.closeCart(),
+      goCheckout: () => self.goCheckout(),
+      placeOrder: (e) => { if (e && e.preventDefault) e.preventDefault(); self.placeOrder(); },
+      continueShopping: () => self.continueShopping(), scrollToGrid: () => self.scrollToGrid(),
+    };
+  }
+}
+</script>
+</body>
+</html>
