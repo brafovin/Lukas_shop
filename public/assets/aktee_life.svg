@@ -1,14 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
-  <defs>
-    <pattern id="s" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <rect width="16" height="16" fill="#ddd9cf"/>
-      <rect width="8" height="16" fill="#d4cfc3"/>
-    </pattern>
-  </defs>
-  <rect width="800" height="1000" fill="url(#s)"/>
-  <rect x="44" y="44" width="712" height="912" fill="none" stroke="#15120e" stroke-opacity="0.16" stroke-width="2"/>
-  <text x="400" y="452" text-anchor="middle" font-family="'Space Mono',monospace" font-size="22" letter-spacing="6" fill="#15120e" opacity="0.55">GRAFIK-SHIRT</text>
-  <text x="400" y="512" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="40" fill="#15120e">AK47 Graphic</text>
-  <text x="400" y="560" text-anchor="middle" font-family="'Space Mono',monospace" font-size="22" fill="#15120e" opacity="0.55">lifestyle</text>
-  <text x="400" y="616" text-anchor="middle" font-family="'Space Mono',monospace" font-size="17" fill="#15120e" opacity="0.4">platzhalter · echtes foto einsetzen</text>
+  <rect width="800" height="1000" fill="#e4ddd1"/>
+  <circle cx="400" cy="520" r="260" fill="#1d1c1a" opacity="0.12"/>
+  
+  <path d="M300 300 L362 262 Q400 298 438 262 L500 300 L592 352 L548 458 L506 432 L506 772 L294 772 L294 432 L252 458 L208 352 Z" fill="#1d1c1a" stroke="rgba(20,18,14,.55)" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M362 262 Q400 298 438 262" fill="none" stroke="rgba(255,255,255,.30)" stroke-width="3"/>
+  
+  <text x="400" y="900" text-anchor="middle" font-family="'Permanent Marker',cursive" font-size="30" fill="rgba(20,18,14,.55)">Los Angeles</text>
 </svg>

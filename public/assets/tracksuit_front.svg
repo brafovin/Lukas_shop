@@ -1,14 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
-  <defs>
-    <pattern id="s" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <rect width="16" height="16" fill="#eae7e0"/>
-      <rect width="8" height="16" fill="#e1ded5"/>
-    </pattern>
-  </defs>
-  <rect width="800" height="1000" fill="url(#s)"/>
-  <rect x="44" y="44" width="712" height="912" fill="none" stroke="#15120e" stroke-opacity="0.16" stroke-width="2"/>
-  <text x="400" y="452" text-anchor="middle" font-family="'Space Mono',monospace" font-size="22" letter-spacing="6" fill="#15120e" opacity="0.55">JOGGINGANZUG</text>
-  <text x="400" y="512" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="40" fill="#15120e">Eastside Set</text>
-  <text x="400" y="560" text-anchor="middle" font-family="'Space Mono',monospace" font-size="22" fill="#15120e" opacity="0.55">vorderseite</text>
-  <text x="400" y="616" text-anchor="middle" font-family="'Space Mono',monospace" font-size="17" fill="#15120e" opacity="0.4">platzhalter · echtes foto einsetzen</text>
+  <rect width="800" height="1000" fill="#eae7e0"/>
+  
+  
+  <path d="M300 300 L368 272 L432 272 L500 300 L588 356 L546 466 L506 442 L506 786 L294 786 L294 442 L254 466 L212 356 Z" fill="#9b9893" stroke="rgba(20,18,14,.55)" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="400" y1="300" x2="400" y2="786" stroke="rgba(255,255,255,.30)" stroke-width="3"/>
+  <path d="M368 272 L400 300 L432 272" fill="none" stroke="rgba(255,255,255,.30)" stroke-width="3"/>
+  
+  <text x="400" y="900" text-anchor="middle" font-family="'Permanent Marker',cursive" font-size="30" fill="rgba(20,18,14,.55)">Los Angeles</text>
 </svg>
